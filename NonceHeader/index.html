@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECMAScript ImportMaps and Content Security Policy: Nonce</title>
+  <script
+    type="importmap"
+    nonce="NqIr5ziC">{"imports":{"./lib.js":"./lib.js"}}</script>
+  <script
+    type="module"
+    nonce="RXRHhu5O"
+    src="./js/script.js"
+    async></script>
+</head>
+<body>
+  <h1>ECMAScript ImportMaps and Content Security Policy: Nonce (HTTP Header)</h1>
+  <p>This page uses `<code>nonce</code>` values for its <i>Content Security Policy</i>, defined as `<code>HTTP Header</code>` tag, to authorize the scripts to run.</p>
+  <pre><code>Content-Security-Policy:
+  default-src
+    'self';
+  script-src
+    'nonce-NqIr5ziC'
+    'nonce-RXRHhu5O';</code></pre>
+  <p>The `<code>lib.js</code>` is loaded by the `<code>script.js</code>` file without further `<code>nonce</code>` values.</p>
+</body>
+</html>

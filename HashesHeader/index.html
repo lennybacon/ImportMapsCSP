@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECMAScript ImportMaps and Content Security Policy</title>
+  <link rel="modulepreload" href="./js/lib.js" integrity="sha512-T0bcKoi/hQlsjVBn+6DnbA/i5/ktAoUVcS36jExDX9lCP0o1UnfFtHsjeFfqogc2jXqeykx5PNO3WIbrb7dXow==">
+  <script
+    type="importmap"
+    integrity="sha512-NqIr5ziC/poXkDQ3ZKssL4GmDfzERJ6He+VXO9PDWAiE9tp2sGMJvcOmuxj/b6BD3RWoi0ePkL52/EyhDiJLmQ==">{"imports":{"./lib.js":"./lib.js"}}</script>
+  <script
+    type="module"
+    integrity="sha512-RXRHhu5O/7je3gyQMWwkPE08dVWmzAZp6uTssJbYO2qfo4bF6jPHsqxyMZdmi+4uOAUu5oSdXlpue9XblcMR7A=="
+    src="./js/script.js"
+    async></script>
+</head>
+<body>
+  <h1>ECMAScript ImportMaps and Content Security Policy: Hashes (HTTP Header)</h1>
+  <p>This page uses `<code>hashes</code>` values for its <i>Content Security Policy</i>, defined as `<code>HTTP-Header</code>` tag, to authorize the scripts to run.</p>
+  <pre><code>Content-Security-Policy:
+  default-src
+    'self';
+  script-src
+    'sha512-NqIr5ziC/poXkDQ3ZKssL4GmDfzERJ6He+VXO9PDWAiE9tp2sGMJvcOmuxj/b6BD3RWoi0ePkL52/EyhDiJLmQ=='
+    'sha512-RXRHhu5O/7je3gyQMWwkPE08dVWmzAZp6uTssJbYO2qfo4bF6jPHsqxyMZdmi+4uOAUu5oSdXlpue9XblcMR7A=='
+    'sha512-T0bcKoi/hQlsjVBn+6DnbA/i5/ktAoUVcS36jExDX9lCP0o1UnfFtHsjeFfqogc2jXqeykx5PNO3WIbrb7dXow==';</code></pre>
+  <p>The `<code>lib.js</code>` is <b>only</b> loaded by the `<code>script.js</code>` file when the `<code>hash</code>` of the file is published to the browser
+    using a `<code>&lt;link&gt;</code> tag with the `<code>rel="modulepreload"</code>` attribute. This means that modules are <b>not</b> loaded on demand any more.</p>
+    <blockquote>
+      Preloading allows modules and their dependencies to be downloaded early, and can also significantly reduce the overall download and processing time. This is because it allows pages to fetch modules in parallel, instead of sequentially as each module is processed and its dependencies are discovered. Note however that you can't just preload everything! What you choose to preload must be balanced against other operations that might then be starved, adversely affecting user experience.
+      <cite><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/modulepreload">MDN</a></cite>
+    </blockquote>
+</body>
+</html>
